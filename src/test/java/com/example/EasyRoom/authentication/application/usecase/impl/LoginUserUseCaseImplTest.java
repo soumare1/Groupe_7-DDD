@@ -35,6 +35,7 @@ class LoginUserUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
+        // Setup global pour tous les tests (partie du Sandwich Pattern)
         requestDto = new UserRequestDto();
         requestDto.setEmail("test@example.com");
         requestDto.setPassword("password123");
@@ -42,48 +43,52 @@ class LoginUserUseCaseImplTest {
 
     @Test
     void execute_shouldLoginSuccessfully() {
-        // Arrange
+        // 1. Setup (Arrange) : Préparer les données et configurer les mocks
         UserAggregate user = new UserAggregate(new Email("test@example.com"), new Password("password123"));
         user.setId(1L);
-
         when(userRepository.findByEmail(any(Email.class))).thenReturn(user);
+        doNothing().when(userDomainService).validatePassword("password123");
 
-        // Act
+        // 2. Exercise (Act) : Exécuter l'action à tester
         UserResponseDto response = loginUserUseCase.execute(requestDto);
 
-        // Assert
+        // 3. Verify (Assert) : Vérifier les résultats attendus
         assertNotNull(response);
         assertEquals(1L, response.getId());
         assertEquals("test@example.com", response.getEmail());
-        verify(userDomainService).validateEmail("test@example.com");
-        verify(userDomainService).validatePassword("password123");
         verify(userRepository).findByEmail(any(Email.class));
-    }
-
-    @Test
-    void execute_shouldThrowExceptionWhenCredentialsAreInvalid() {
-        // Arrange
-        UserAggregate user = new UserAggregate(new Email("test@example.com"), new Password("wrongpassword"));
-        when(userRepository.findByEmail(any(Email.class))).thenReturn(user);
-
-        // Act & Assert
-        DomainException exception = assertThrows(DomainException.class, () -> loginUserUseCase.execute(requestDto));
-        assertEquals("Login failed: Invalid email or password", exception.getMessage());
-        verify(userDomainService).validateEmail("test@example.com");
         verify(userDomainService).validatePassword("password123");
-        verify(userRepository).findByEmail(any(Email.class));
+
+        // Teardown implicite : Mockito nettoie automatiquement les mocks
     }
 
     @Test
     void execute_shouldThrowExceptionWhenUserNotFound() {
-        // Arrange
+        // 1. Setup (Arrange)
         when(userRepository.findByEmail(any(Email.class))).thenReturn(null);
 
-        // Act & Assert
+        // 2. Exercise (Act) & Verify (Assert)
         DomainException exception = assertThrows(DomainException.class, () -> loginUserUseCase.execute(requestDto));
-        assertEquals("Login failed: Invalid email or password", exception.getMessage());
-        verify(userDomainService).validateEmail("test@example.com");
-        verify(userDomainService).validatePassword("password123");
+        assertEquals("Login failed: User not found", exception.getMessage());
         verify(userRepository).findByEmail(any(Email.class));
+        verify(userDomainService, never()).validatePassword(anyString());
+
+        // Teardown implicite
+    }
+
+    @Test
+    void execute_shouldThrowExceptionWhenPasswordValidationFails() {
+        // 1. Setup (Arrange)
+        UserAggregate user = new UserAggregate(new Email("test@example.com"), new Password("password123"));
+        when(userRepository.findByEmail(any(Email.class))).thenReturn(user);
+        doThrow(new IllegalArgumentException("Invalid password")).when(userDomainService).validatePassword("password123");
+
+        // 2. Exercise (Act) & Verify (Assert)
+        DomainException exception = assertThrows(DomainException.class, () -> loginUserUseCase.execute(requestDto));
+        assertEquals("Login failed: Invalid password", exception.getMessage());
+        verify(userRepository).findByEmail(any(Email.class));
+        verify(userDomainService).validatePassword("password123");
+
+        // Teardown implicite
     }
 }

@@ -39,6 +39,7 @@ class CreateUserUseCaseImplTest {
 
     @BeforeEach
     void setUp() {
+        // Setup global pour tous les tests (partie du Sandwich Pattern)
         requestDto = new UserRequestDto();
         requestDto.setEmail("test@example.com");
         requestDto.setPassword("password123");
@@ -46,17 +47,17 @@ class CreateUserUseCaseImplTest {
 
     @Test
     void execute_shouldCreateUserSuccessfully() {
-        // Arrange
+        // 1. Setup (Arrange) : Préparer les données et configurer les mocks
         UserAggregate savedUser = new UserAggregate(new Email("test@example.com"), new Password("password123"));
         savedUser.setId(1L);
 
-        when(userRepository.findByEmail(any(Email.class))).thenReturn(null); // Email doesn't exist
+        when(userRepository.findByEmail(any(Email.class))).thenReturn(null); // Email n'existe pas
         when(userRepository.save(any(UserAggregate.class))).thenReturn(savedUser);
 
-        // Act
+        // 2. Exercise (Act) : Exécuter l'action à tester
         UserResponseDto response = createUserUseCase.execute(requestDto);
 
-        // Assert
+        // 3. Verify (Assert) : Vérifier les résultats attendus
         assertNotNull(response);
         assertEquals(1L, response.getId());
         assertEquals("test@example.com", response.getEmail());
@@ -65,15 +66,17 @@ class CreateUserUseCaseImplTest {
         verify(userRepository).findByEmail(any(Email.class));
         verify(userRepository).save(any(UserAggregate.class));
         verify(eventPublisher).publish(any());
+
+        // Teardown implicite : Mockito nettoie automatiquement les mocks après chaque test
     }
 
     @Test
     void execute_shouldThrowExceptionWhenEmailAlreadyExists() {
-        // Arrange
+        // 1. Setup (Arrange)
         UserAggregate existingUser = new UserAggregate(new Email("test@example.com"), new Password("password123"));
         when(userRepository.findByEmail(any(Email.class))).thenReturn(existingUser);
 
-        // Act & Assert
+        // 2. Exercise (Act) & Verify (Assert)
         DomainException exception = assertThrows(DomainException.class, () -> createUserUseCase.execute(requestDto));
         assertEquals("Failed to create user: Email already exists", exception.getMessage());
         verify(userDomainService).validateEmail("test@example.com");
@@ -81,14 +84,16 @@ class CreateUserUseCaseImplTest {
         verify(userRepository).findByEmail(any(Email.class));
         verify(userRepository, never()).save(any(UserAggregate.class));
         verify(eventPublisher, never()).publish(any());
+
+        // Teardown implicite
     }
 
     @Test
     void execute_shouldThrowExceptionWhenEmailValidationFails() {
-        // Arrange
+        // 1. Setup (Arrange)
         doThrow(new IllegalArgumentException("Invalid email format")).when(userDomainService).validateEmail("test@example.com");
 
-        // Act & Assert
+        // 2. Exercise (Act) & Verify (Assert)
         DomainException exception = assertThrows(DomainException.class, () -> createUserUseCase.execute(requestDto));
         assertEquals("Failed to create user: Invalid email format", exception.getMessage());
         verify(userDomainService).validateEmail("test@example.com");
@@ -96,5 +101,7 @@ class CreateUserUseCaseImplTest {
         verify(userRepository, never()).findByEmail(any(Email.class));
         verify(userRepository, never()).save(any(UserAggregate.class));
         verify(eventPublisher, never()).publish(any());
+
+        // Teardown implicite
     }
 }

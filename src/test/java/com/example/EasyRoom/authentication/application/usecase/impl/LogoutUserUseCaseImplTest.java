@@ -1,10 +1,8 @@
 package com.example.EasyRoom.authentication.application.usecase.impl;
 
 import com.example.EasyRoom.authentication.application.dto.UserResponseDto;
-import com.example.EasyRoom.authentication.application.usecase.LogoutUserUseCase;
 import com.example.EasyRoom.authentication.domain.service.SessionService;
 import com.example.EasyRoom.shared.exception.DomainException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,21 +23,31 @@ class LogoutUserUseCaseImplTest {
 
     @Test
     void execute_shouldLogoutSuccessfully() {
-        // Act
-        UserResponseDto response = logoutUserUseCase.execute(1L);
+        // 1. Setup (Arrange) : Préparer les données et configurer les mocks
+        Long userId = 1L;
 
-        // Assert
+        // 2. Exercise (Act) : Exécuter l'action à tester
+        UserResponseDto response = logoutUserUseCase.execute(userId);
+
+        // 3. Verify (Assert) : Vérifier les résultats attendus
         assertNotNull(response);
         assertEquals(1L, response.getId());
         assertNull(response.getEmail());
         verify(sessionService).invalidateSession(1L);
+
+        // Teardown implicite : Mockito nettoie automatiquement les mocks
     }
 
     @Test
     void execute_shouldThrowExceptionWhenUserIdIsNull() {
-        // Act & Assert
-        DomainException exception = assertThrows(DomainException.class, () -> logoutUserUseCase.execute(null));
+        // 1. Setup (Arrange)
+        Long userId = null;
+
+        // 2. Exercise (Act) & Verify (Assert)
+        DomainException exception = assertThrows(DomainException.class, () -> logoutUserUseCase.execute(userId));
         assertEquals("Logout failed: User ID cannot be null", exception.getMessage());
         verify(sessionService, never()).invalidateSession(anyLong());
+
+        // Teardown implicite
     }
 }

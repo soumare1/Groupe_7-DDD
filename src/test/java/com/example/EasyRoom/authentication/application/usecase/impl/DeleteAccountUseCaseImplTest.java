@@ -5,7 +5,6 @@ import com.example.EasyRoom.authentication.domain.repository.UserRepository;
 import com.example.EasyRoom.authentication.domain.event.UserDeletedEvent;
 import com.example.EasyRoom.shared.event.EventPublisher;
 import com.example.EasyRoom.shared.exception.DomainException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,40 +30,49 @@ class DeleteAccountUseCaseImplTest {
 
     @Test
     void execute_shouldDeleteAccountSuccessfully() {
-        // Arrange
+        // 1. Setup (Arrange) : Préparer les données et configurer les mocks
         UserAggregate user = new UserAggregate(null, null); // Email et Password peuvent être null pour ce test
         user.setId(1L);
         when(userRepository.findById(1L)).thenReturn(user);
 
-        // Act
+        // 2. Exercise (Act) : Exécuter l'action à tester
         deleteAccountUseCase.execute(1L);
 
-        // Assert
+        // 3. Verify (Assert) : Vérifier les résultats attendus
         verify(userRepository).findById(1L);
         verify(userRepository).delete(user);
-        verify(eventPublisher).publish(eq(new UserDeletedEvent(1L))); // Vérifie l'égalité logique
+        verify(eventPublisher).publish(eq(new UserDeletedEvent(1L)));
+
+        // Teardown implicite : Mockito nettoie automatiquement les mocks
     }
 
     @Test
     void execute_shouldThrowExceptionWhenUserIdIsNull() {
-        // Act & Assert
-        DomainException exception = assertThrows(DomainException.class, () -> deleteAccountUseCase.execute(null));
+        // 1. Setup (Arrange)
+        Long userId = null;
+
+        // 2. Exercise (Act) & Verify (Assert)
+        DomainException exception = assertThrows(DomainException.class, () -> deleteAccountUseCase.execute(userId));
         assertEquals("Failed to delete account: User ID cannot be null", exception.getMessage());
         verify(userRepository, never()).findById(anyLong());
         verify(userRepository, never()).delete(any(UserAggregate.class));
         verify(eventPublisher, never()).publish(any());
+
+        // Teardown implicite
     }
 
     @Test
     void execute_shouldThrowExceptionWhenUserNotFound() {
-        // Arrange
+        // 1. Setup (Arrange)
         when(userRepository.findById(1L)).thenReturn(null);
 
-        // Act & Assert
+        // 2. Exercise (Act) & Verify (Assert)
         DomainException exception = assertThrows(DomainException.class, () -> deleteAccountUseCase.execute(1L));
         assertEquals("Failed to delete account: User not found", exception.getMessage());
         verify(userRepository).findById(1L);
         verify(userRepository, never()).delete(any(UserAggregate.class));
         verify(eventPublisher, never()).publish(any());
+
+        // Teardown implicite
     }
 }
