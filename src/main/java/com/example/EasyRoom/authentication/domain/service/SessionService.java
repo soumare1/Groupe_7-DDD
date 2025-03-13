@@ -1,5 +1,5 @@
 package com.example.EasyRoom.authentication.domain.service;
 
-public class SessionService {
-
+public interface SessionService {
+    void invalidateSession(Long userId);
 }

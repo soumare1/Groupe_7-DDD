@@ -26,9 +26,4 @@ public class LogoutUserUseCaseImpl implements LogoutUserUseCase {
             throw new DomainException("Logout failed: " + e.getMessage(), e);
         }
     }
-    // Interface fictive pour le service de session
-    private interface SessionService {
-        void invalidateSession(Long userId);
-    }
 }
-
