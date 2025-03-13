@@ -1,8 +1,5 @@
 package com.example.EasyRoom.authentication.application.usecase.impl;
 
-import com.example.EasyRoom.authentication.application.dto.UserResponseDto;
-import com.example.EasyRoom.authentication.domain.service.SessionService;
-import com.example.EasyRoom.shared.exception.DomainException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

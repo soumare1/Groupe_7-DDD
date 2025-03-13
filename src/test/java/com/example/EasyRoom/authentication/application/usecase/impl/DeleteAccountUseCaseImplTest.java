@@ -1,10 +1,5 @@
 package com.example.EasyRoom.authentication.application.usecase.impl;
 
-import com.example.EasyRoom.authentication.domain.aggregate.UserAggregate;
-import com.example.EasyRoom.authentication.domain.repository.UserRepository;
-import com.example.EasyRoom.authentication.domain.event.UserDeletedEvent;
-import com.example.EasyRoom.shared.event.EventPublisher;
-import com.example.EasyRoom.shared.exception.DomainException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
