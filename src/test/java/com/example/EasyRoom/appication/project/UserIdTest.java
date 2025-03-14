@@ -3,6 +3,7 @@ package com.example.EasyRoom.appication.project;
 import org.junit.jupiter.api.Test;
 
 import com.example.EasyRoom.model.project.UserId;
+import com.example.EasyRoom.model.project.ValidateContainException;
 
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,7 +62,7 @@ class UserIdTest {
     @Test
     @DisplayName("Should throw exception for null value")
     void shouldThrowExceptionForNullValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new UserId(null);
         });
     }
@@ -69,7 +70,7 @@ class UserIdTest {
     @Test
     @DisplayName("Should throw exception for empty value")
     void shouldThrowExceptionForEmptyValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new UserId("");
         });
     }
@@ -77,7 +78,7 @@ class UserIdTest {
     @Test
     @DisplayName("Should throw exception for blank value")
     void shouldThrowExceptionForBlankValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new UserId("   ");
         });
     }

@@ -4,6 +4,7 @@ package com.example.EasyRoom.appication.project;
 import org.junit.jupiter.api.Test;
 
 import com.example.EasyRoom.model.project.ProjectDescription;
+import com.example.EasyRoom.model.project.ValidateContainException;
 
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,11 +23,11 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for invalid punctuation")
     void shouldThrowExceptionForInvalidPunctuation() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("This description contains invalid punctuation!");
         });
         
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("This description contains commas, which are not allowed.");
         });
     }
@@ -35,7 +36,7 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for null value")
     void shouldThrowExceptionForNullValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription(null);
         });
     }
@@ -43,10 +44,10 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for empty value")
     void shouldThrowExceptionForEmptyValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("");
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("   ");
         });
     }
@@ -54,7 +55,7 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for too short description")
     void shouldThrowExceptionForTooShortValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("Short.");
         });
     }
@@ -63,7 +64,7 @@ public class ProjectDescriptionTest {
     @DisplayName("Should throw exception for too long description")
     void shouldThrowExceptionForTooLongValue() {
         String tooLong = "A".repeat(1001) + ".";
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription(tooLong);
         });
     }
@@ -71,7 +72,7 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for invalid characters")
     void shouldThrowExceptionForInvalidCharacters() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("Invalid $ special @ characters.");
         });
     }
@@ -79,11 +80,11 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for invalid structure")
     void shouldThrowExceptionForInvalidStructure() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("lowercase start is invalid.");
         });
         
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("Missing final period");
         });
     }

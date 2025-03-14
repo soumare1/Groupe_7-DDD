@@ -3,6 +3,7 @@ package com.example.EasyRoom.appication.project;
 import org.junit.jupiter.api.Test;
 
 import com.example.EasyRoom.model.project.Project;
+import com.example.EasyRoom.model.project.ValidateContainException;
 
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +54,7 @@ public class ProjectTest {
     @Test
     @DisplayName("Should throw exception when reconstituting with null id")
     void shouldThrowExceptionWithNullId() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             Project.reconstitute(null, "name", "desc", "userId");
         });
     }
@@ -61,7 +62,7 @@ public class ProjectTest {
     @Test
     @DisplayName("Should throw exception when reconstituting with empty id")
     void shouldThrowExceptionWithEmptyId() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             Project.reconstitute("", "name", "desc", "userId");
         });
     }
@@ -69,7 +70,7 @@ public class ProjectTest {
     @Test
     @DisplayName("Should throw exception when reconstituting with blank id")
     void shouldThrowExceptionWithBlankId() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             Project.reconstitute("   ", "name", "desc", "userId");
         });
     }
