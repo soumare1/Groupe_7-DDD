@@ -1,31 +1,40 @@
 package com.example.EasyRoom.model.project;
 
-import java.util.Objects;
-
-public  final class ProjectDescription {
-    private final String value;
+public  final class ProjectDescription extends Contain {
+    private static final int MIN_LENGTH = 100;
+    private static final int MAX_LENGTH = 500;
 
     public ProjectDescription(String value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Description cannot be null");
-        }
-        this.value = value;
+        super(value);
+    }
+
+    @Override
+    protected int getMinLength() {
+        return MIN_LENGTH;
+    }
+
+    @Override
+    protected int getMaxLength() {
+        return MAX_LENGTH;
+    }
+
+    @Override
+    protected String getEmptyErrorMessage() {
+        return "Project description cannot be empty";
+    }
+
+    @Override
+    public String getInvalidCharactersErrorMessage() {
+        return "Project description can only contain letters, numbers, spaces and hyphens";
+    }
+
+    @Override
+    protected boolean containsOnlyValidCharacters(String value) {
+        return true;
     }
 
     public String getValue() {
         return value;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProjectDescription that = (ProjectDescription) o;  
-        return Objects.equals(value, that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(value);
-    }
 }
