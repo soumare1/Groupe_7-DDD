@@ -25,7 +25,7 @@ public class CreateProjectUseCase {
         return new ProjectResponse(
             savedProject.getId().toString(),
             savedProject.getName().getValue(),
-            savedProject.getDescription().getValue(),
+            savedProject.getProjectDescription().getValue(),
             savedProject.getUserId().getValue().toString(),
             List.of() 
         );

@@ -84,5 +84,23 @@ class CreateProjectUseCaseTest {
         });
     }
 
+    @Test
+    @DisplayName("Should throw exception when repository returns null")
+    void shouldThrowExceptionOnNullRepositoryResponse() {
+        // Arrange
+        CreateProjectRequest request = new CreateProjectRequest(
+            "Test Project", 
+            "Description", 
+            "user123"
+        );
+        
+        when(projectRepository.save(any(Project.class))).thenReturn(null);
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> {
+            useCase.execute(request);
+        });
+    }
+
     
 }

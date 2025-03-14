@@ -1,16 +1,15 @@
 package com.example.EasyRoom.infrastructure.persistence;
 
 import com.example.EasyRoom.model.project.Project;
-import com.example.EasyRoom.model.project.Project.ProjectId;
+import com.example.EasyRoom.model.project.ProjectId;
 import com.example.EasyRoom.model.project.ProjectRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.rmi.server.UID;
 
 public class ProjectRepositoryImpl implements ProjectRepository {
     
-    private Map<ProjectId, Project> projects = new HashMap<>();
+    private Map<Object, Project> projects = new HashMap<>();
 
     @Override
     public Project save(Project project) {
@@ -22,6 +21,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     public Project findById(ProjectId id) {
         return projects.get(id);
     }
+
 
     @Override
     public void delete(Project project) {
