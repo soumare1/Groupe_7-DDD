@@ -32,7 +32,7 @@ class CreateProjectUseCaseTest {
     void shouldCreateProject() {
         // Arrange
         String name = "Test Project";
-        String description = "Test Description";
+        String description = "Test Description , Should create project through use caseShould create project through use caseShould create project through use case";
         String userId = "user123";
         
         CreateProjectRequest request = new CreateProjectRequest(name, description, userId);

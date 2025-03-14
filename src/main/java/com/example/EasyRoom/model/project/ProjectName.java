@@ -1,31 +1,35 @@
 package com.example.EasyRoom.model.project;
 
-import java.util.Objects;
-
-public  class ProjectName {
-    private final String value;
+public final class ProjectName extends Contain {
+    private static final int MIN_LENGTH = 3;
+    private static final int MAX_LENGTH = 50;
 
     public ProjectName(String value) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("Project name cannot be empty");
-        }
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
+        super(value);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProjectName that = (ProjectName) o;
-        return Objects.equals(value, that.value);
+    protected int getMinLength() {
+        return MIN_LENGTH;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(value);
+    protected int getMaxLength() {
+        return MAX_LENGTH;
+    }
+
+    @Override
+    protected String getEmptyErrorMessage() {
+        return "Project name cannot be empty";
+    }
+
+    @Override
+    protected String getInvalidCharactersErrorMessage() {
+        return "Project name can only contain letters, numbers, spaces and hyphens";
+    }
+
+    @Override
+    protected boolean containsOnlyValidCharacters(String value) {
+        return value.matches("^[a-zA-Z][a-zA-Z0-9\\s-]*$");
     }
 }

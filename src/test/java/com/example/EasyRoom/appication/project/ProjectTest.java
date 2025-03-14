@@ -15,7 +15,7 @@ public class ProjectTest {
         // Arrange
         String id = "project-123";
         String name = "Test Project";
-        String description = "Test Description";
+        String description = "Test Description , Should create project through use caseShould create project through use caseShould create project through use case";
         String userId = "user-123";
 
         // Act
@@ -32,11 +32,11 @@ public class ProjectTest {
     @DisplayName("Should test all equals scenarios")
     void shouldTestEquality() {
         // Same instance
-        Project project1 = Project.reconstitute("project-123", "name", "desc", "userId");
+        Project project1 = Project.reconstitute("project-123", "name", "Test Description , Should create project through use caseShould create project through use caseShould create project through use case", "userId");
         assertTrue(project1.equals(project1));
 
         // Same values
-        Project project2 = Project.reconstitute("project-123", "name", "desc", "userId");
+        Project project2 = Project.reconstitute("project-123", "name", "Test Description , Should create project through use caseShould create project through use caseShould create project through use case", "userId");
         assertTrue(project1.equals(project2));
 
         // Null comparison
@@ -46,7 +46,7 @@ public class ProjectTest {
         assertFalse(project1.equals("project-123"));
 
         // Different values
-        Project project3 = Project.reconstitute("other-id", "name", "desc", "userId");
+        Project project3 = Project.reconstitute("other-id", "name", "Test Description , Should create project through use caseShould create project through use caseShould create project through use case", "userId");
         assertFalse(project1.equals(project3));
     }
 

@@ -11,16 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectNameTest {
 
     @Test
-    @DisplayName("Should create ProjectName with valid value")
+    @DisplayName("Should create project name with valid value")
     void shouldCreateProjectName() {
-        // Arrange
-        String name = "Test Project";
-
-        // Act
+        String name = "Project Alpha";
         ProjectName projectName = new ProjectName(name);
-
-        // Assert
-        assertNotNull(projectName);
         assertEquals(name, projectName.getValue());
     }
 
@@ -38,48 +32,73 @@ class ProjectNameTest {
         assertThrows(IllegalArgumentException.class, () -> {
             new ProjectName("");
         });
-    }
-
-    @Test
-    @DisplayName("Should throw exception for blank value")
-    void shouldThrowExceptionForBlankValue() {
         assertThrows(IllegalArgumentException.class, () -> {
             new ProjectName("   ");
         });
     }
 
     @Test
-    @DisplayName("Should test all equality scenarios")
+    @DisplayName("Should throw exception for too short name")
+    void shouldThrowExceptionForTooShortValue() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectName("Ab");
+        });
+    }
+
+    @Test
+    @DisplayName("Should throw exception for too long name")
+    void shouldThrowExceptionForTooLongValue() {
+        String tooLong = "A".repeat(51);
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectName(tooLong);
+        });
+    }
+
+    @Test
+    @DisplayName("Should throw exception for invalid characters")
+    void shouldThrowExceptionForInvalidCharacters() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectName("Project@123");
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectName("Project_Name");
+        });
+    }
+
+    @Test
+    @DisplayName("Should throw exception for invalid start character")
+    void shouldThrowExceptionForInvalidStartCharacter() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectName("123Project");
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectName("-Project");
+        });
+    }
+
+    @Test
+    @DisplayName("Should test equality scenarios")
     void shouldTestEquality() {
-        // Same instance
-        ProjectName name1 = new ProjectName("Test Project");
+        ProjectName name1 = new ProjectName("Project Alpha");
+        ProjectName name2 = new ProjectName("Project Alpha");
+        ProjectName name3 = new ProjectName("Project Beta");
+
         assertTrue(name1.equals(name1));
-
-        // Same value
-        ProjectName name2 = new ProjectName("Test Project");
         assertTrue(name1.equals(name2));
-
-        // Null comparison
         assertFalse(name1.equals(null));
-
-        // Different type
-        assertFalse(name1.equals("Test Project"));
-
-        // Different value
-        ProjectName name3 = new ProjectName("Different Project");
+        assertFalse(name1.equals("Project Alpha"));
         assertFalse(name1.equals(name3));
     }
 
     @Test
     @DisplayName("Should test hashCode consistency")
     void shouldTestHashCode() {
-        // Arrange
-        ProjectName name1 = new ProjectName("Test Project");
-        ProjectName name2 = new ProjectName("Test Project");
-        ProjectName name3 = new ProjectName("Different Project");
+        ProjectName name1 = new ProjectName("Project Alpha");
+        ProjectName name2 = new ProjectName("Project Alpha");
+        ProjectName name3 = new ProjectName("Project Beta");
 
-        // Assert
         assertEquals(name1.hashCode(), name2.hashCode());
         assertNotEquals(name1.hashCode(), name3.hashCode());
     }
+
 }
