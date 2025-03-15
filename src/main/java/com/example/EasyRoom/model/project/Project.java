@@ -33,7 +33,6 @@ public final class Project {
         );
     }
 
-    // Getters - No setters to ensure immutability
     public String getId() {
         return id.getValue();
     }

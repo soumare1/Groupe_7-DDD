@@ -62,24 +62,27 @@ class UserIdTest {
     @Test
     @DisplayName("Should throw exception for null value")
     void shouldThrowExceptionForNullValue() {
-        assertThrows(ValidateContainException.class, () -> {
+        ValidateContainException exception = assertThrows(ValidateContainException.class, () -> {
             new UserId(null);
         });
+        assertEquals("User ID cannot be empty", exception.getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception for empty value")
     void shouldThrowExceptionForEmptyValue() {
-        assertThrows(ValidateContainException.class, () -> {
+        ValidateContainException exception = assertThrows(ValidateContainException.class, () -> {
             new UserId("");
         });
+        assertEquals("User ID cannot be empty", exception.getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception for blank value")
     void shouldThrowExceptionForBlankValue() {
-        assertThrows(ValidateContainException.class, () -> {
+        ValidateContainException exception = assertThrows(ValidateContainException.class, () -> {
             new UserId("   ");
         });
+        assertEquals("User ID cannot be empty", exception.getMessage());
     }
 }
