@@ -2,6 +2,7 @@ package com.example.EasyRoom.appication.project;
 
 import com.example.EasyRoom.model.project.Project;
 import com.example.EasyRoom.model.project.ProjectRepository;
+import com.example.EasyRoom.model.project.ValidateContainException;
 import com.example.EasyRoom.application.project.CreateProjectUseCase;
 import com.example.EasyRoom.application.project.dto.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +59,7 @@ class CreateProjectUseCaseTest {
         CreateProjectRequest request = new CreateProjectRequest("", "Description", "user123");
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             useCase.execute(request);
         });
         

@@ -11,20 +11,20 @@ public abstract class Contain {
 
     protected String validateAndNormalize(String value) {
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException(getEmptyErrorMessage());
+            throw new ValidateContainException(getEmptyErrorMessage());
         }
         if (value.length() < getMinLength()) {
-            throw new IllegalArgumentException(
+            throw new ValidateContainException(
                 String.format("Value must be at least %d characters long", getMinLength())
             );
         }
         if (value.length() > getMaxLength()) {
-            throw new IllegalArgumentException(
+            throw new ValidateContainException(
                 String.format("Value cannot exceed %d characters", getMaxLength())
             );
         }
         if (!containsOnlyValidCharacters(value)) {
-            throw new IllegalArgumentException(getInvalidCharactersErrorMessage());
+            throw new ValidateContainException(getInvalidCharactersErrorMessage());
         }
         return value.trim();
     }

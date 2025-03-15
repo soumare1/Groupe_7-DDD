@@ -7,7 +7,7 @@ public  final class UserId {
 
     public UserId(String value) {
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("User ID cannot be empty");
+            throw new ValidateContainException("User ID cannot be empty");
         }
         this.value = value;
     }

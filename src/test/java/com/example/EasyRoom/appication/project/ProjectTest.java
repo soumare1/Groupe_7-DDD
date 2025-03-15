@@ -3,6 +3,7 @@ package com.example.EasyRoom.appication.project;
 import org.junit.jupiter.api.Test;
 
 import com.example.EasyRoom.model.project.Project;
+import com.example.EasyRoom.model.project.ValidateContainException;
 
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,25 +54,29 @@ public class ProjectTest {
     @Test
     @DisplayName("Should throw exception when reconstituting with null id")
     void shouldThrowExceptionWithNullId() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        ValidateContainException exception = assertThrows(ValidateContainException.class, () -> {
             Project.reconstitute(null, "name", "desc", "userId");
         });
+
+        assertNotNull(exception);   
     }
 
     @Test
     @DisplayName("Should throw exception when reconstituting with empty id")
     void shouldThrowExceptionWithEmptyId() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        ValidateContainException exception = assertThrows(ValidateContainException.class, () -> {
             Project.reconstitute("", "name", "desc", "userId");
         });
+        assertEquals("Project ID cannot be empty", exception.getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception when reconstituting with blank id")
     void shouldThrowExceptionWithBlankId() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        ValidateContainException exception = assertThrows(ValidateContainException.class, () -> {
             Project.reconstitute("   ", "name", "desc", "userId");
         });
+        assertEquals("Project ID cannot be empty", exception.getMessage());
     }
 
     @Test
@@ -80,7 +85,7 @@ public class ProjectTest {
         // Arrange
         String id = "project-123";
         String name = "Test Project";
-        String description = "Test Description";
+        String description = "Test DescriptionTest DescriptionTest\"Test DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest Description";
         String userId = "user-123";
 
         // Act
@@ -99,7 +104,7 @@ public class ProjectTest {
         // Arrange
         String id = "project-123";
         String name = "Test Project";
-        String description = "Test Description";
+        String description = "Test DescriptionTest DescriptionTest\"Test DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest Description";
         String userId = "user-123";
 
         // Act

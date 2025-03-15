@@ -8,7 +8,7 @@ public  final class ProjectId {
 
     public ProjectId(String value) {
         if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException("Project ID cannot be empty");
+            throw new ValidateContainException("Project ID cannot be empty");
         }
         this.value = value;
     }

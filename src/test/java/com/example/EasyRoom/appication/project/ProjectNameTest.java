@@ -4,6 +4,7 @@ package com.example.EasyRoom.appication.project;
 import org.junit.jupiter.api.Test;
 
 import com.example.EasyRoom.model.project.ProjectName;
+import com.example.EasyRoom.model.project.ValidateContainException;
 
 import org.junit.jupiter.api.DisplayName;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ class ProjectNameTest {
     @Test
     @DisplayName("Should throw exception for null value")
     void shouldThrowExceptionForNullValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectName(null);
         });
     }
@@ -29,10 +30,14 @@ class ProjectNameTest {
     @Test
     @DisplayName("Should throw exception for empty value")
     void shouldThrowExceptionForEmptyValue() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ValidateContainException.class, () -> {
             new ProjectName("");
         });
+<<<<<<< HEAD
+        assertThrows(ValidateContainException.class, () -> {
+=======
         assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectName("   ");
         });
     }
@@ -40,7 +45,11 @@ class ProjectNameTest {
     @Test
     @DisplayName("Should throw exception for too short name")
     void shouldThrowExceptionForTooShortValue() {
+<<<<<<< HEAD
+        assertThrows(ValidateContainException.class, () -> {
+=======
         assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectName("Ab");
         });
     }
@@ -49,7 +58,11 @@ class ProjectNameTest {
     @DisplayName("Should throw exception for too long name")
     void shouldThrowExceptionForTooLongValue() {
         String tooLong = "A".repeat(51);
+<<<<<<< HEAD
+        assertThrows(ValidateContainException.class, () -> {
+=======
         assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectName(tooLong);
         });
     }
@@ -57,10 +70,17 @@ class ProjectNameTest {
     @Test
     @DisplayName("Should throw exception for invalid characters")
     void shouldThrowExceptionForInvalidCharacters() {
+<<<<<<< HEAD
+        assertThrows(ValidateContainException.class, () -> {
+            new ProjectName("Project@123");
+        });
+        assertThrows(ValidateContainException.class, () -> {
+=======
         assertThrows(IllegalArgumentException.class, () -> {
             new ProjectName("Project@123");
         });
         assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectName("Project_Name");
         });
     }
@@ -68,10 +88,17 @@ class ProjectNameTest {
     @Test
     @DisplayName("Should throw exception for invalid start character")
     void shouldThrowExceptionForInvalidStartCharacter() {
+<<<<<<< HEAD
+        assertThrows(ValidateContainException.class, () -> {
+            new ProjectName("123Project");
+        });
+        assertThrows(ValidateContainException.class, () -> {
+=======
         assertThrows(IllegalArgumentException.class, () -> {
             new ProjectName("123Project");
         });
         assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectName("-Project");
         });
     }
