@@ -23,11 +23,19 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for invalid punctuation")
     void shouldThrowExceptionForInvalidPunctuation() {
+<<<<<<< HEAD
         assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("This description contains invalid punctuation!");
         });
         
         assertThrows(ValidateContainException.class, () -> {
+=======
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectDescription("This description contains invalid punctuation!");
+        });
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectDescription("This description contains commas, which are not allowed.");
         });
     }
@@ -36,7 +44,11 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for null value")
     void shouldThrowExceptionForNullValue() {
+<<<<<<< HEAD
         assertThrows(ValidateContainException.class, () -> {
+=======
+        assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectDescription(null);
         });
     }
@@ -44,10 +56,17 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for empty value")
     void shouldThrowExceptionForEmptyValue() {
+<<<<<<< HEAD
         assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("");
         });
         assertThrows(ValidateContainException.class, () -> {
+=======
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectDescription("");
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectDescription("   ");
         });
     }
@@ -55,7 +74,11 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for too short description")
     void shouldThrowExceptionForTooShortValue() {
+<<<<<<< HEAD
         assertThrows(ValidateContainException.class, () -> {
+=======
+        assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectDescription("Short.");
         });
     }
@@ -64,7 +87,11 @@ public class ProjectDescriptionTest {
     @DisplayName("Should throw exception for too long description")
     void shouldThrowExceptionForTooLongValue() {
         String tooLong = "A".repeat(1001) + ".";
+<<<<<<< HEAD
         assertThrows(ValidateContainException.class, () -> {
+=======
+        assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectDescription(tooLong);
         });
     }
@@ -72,7 +99,11 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for invalid characters")
     void shouldThrowExceptionForInvalidCharacters() {
+<<<<<<< HEAD
         assertThrows(ValidateContainException.class, () -> {
+=======
+        assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectDescription("Invalid $ special @ characters.");
         });
     }
@@ -80,11 +111,19 @@ public class ProjectDescriptionTest {
     @Test
     @DisplayName("Should throw exception for invalid structure")
     void shouldThrowExceptionForInvalidStructure() {
+<<<<<<< HEAD
         assertThrows(ValidateContainException.class, () -> {
             new ProjectDescription("lowercase start is invalid.");
         });
         
         assertThrows(ValidateContainException.class, () -> {
+=======
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ProjectDescription("lowercase start is invalid.");
+        });
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+>>>>>>> main
             new ProjectDescription("Missing final period");
         });
     }

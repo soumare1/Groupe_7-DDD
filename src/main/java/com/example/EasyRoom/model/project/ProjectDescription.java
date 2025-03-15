@@ -36,5 +36,4 @@ public  final class ProjectDescription extends Contain {
     public String getValue() {
         return value;
     }
-
 }
